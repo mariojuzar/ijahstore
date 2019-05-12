@@ -133,10 +133,10 @@ func GetAllStockItem(c *gin.Context)  {
 	}
 
 	if err != nil {
-		response.Code = http.StatusNotFound
+		response.Code = http.StatusInternalServerError
 		response.Message = err.Error()
 
-		c.JSON(http.StatusNotFound, response)
+		c.JSON(http.StatusInternalServerError, response)
 	} else {
 		response.Code = http.StatusAccepted
 		response.Message = http.StatusText(http.StatusAccepted)

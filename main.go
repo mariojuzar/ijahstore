@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	itemController "ijahstore/controller/item"
+	stockController "ijahstore/controller/stock"
 	"ijahstore/entity/path"
 	"ijahstore/entity/response"
 	"net/http"
@@ -22,6 +23,9 @@ func main()  {
 		v1.POST(path.Item, itemController.AddStockItem)
 		v1.PUT(path.Item, itemController.UpdateStockItem)
 		v1.DELETE(path.ItemById, itemController.DeleteStockItem)
+
+		// current stock controller path
+		v1.GET(path.Stock, stockController.GetAllCurrentStock)
 
 		// entry item controller path
 		v1.GET(path.EntryItem)

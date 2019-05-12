@@ -6,6 +6,9 @@ var ItemById = Item + "/:id"
 var EntryItem = "/entry"
 var OutcomeItem = "/outcome"
 
+// stock path
+var Stock = "/stock"
+
 // report path
 var Report = "/report"
 
