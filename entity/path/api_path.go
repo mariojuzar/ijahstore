@@ -2,8 +2,9 @@ package path
 
 // item path
 var Item = "/item"
-var EntryItem = Item + "/entry"
-var OutcomeItem = Item + "/outcome"
+var ItemById = Item + "/:id"
+var EntryItem = "/entry"
+var OutcomeItem = "/outcome"
 
 // report path
 var Report = "/report"

@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	itemController "ijahstore/controller/item"
 	"ijahstore/entity/path"
 	"ijahstore/entity/response"
 	"net/http"
@@ -16,7 +17,11 @@ func main()  {
 	v1 := engine.Group(baseURL)
 	{
 		// item controller path
-		v1.GET(path.Item)
+		v1.GET(path.Item, itemController.GetAllStockItem)
+		v1.GET(path.ItemById, itemController.GetStockItem)
+		v1.POST(path.Item, itemController.AddStockItem)
+		v1.PUT(path.Item, itemController.UpdateStockItem)
+		v1.DELETE(path.ItemById, itemController.DeleteStockItem)
 
 		// entry item controller path
 		v1.GET(path.EntryItem)

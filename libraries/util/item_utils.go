@@ -1,6 +1,10 @@
 package util
 
-import "strings"
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
 
 func ShortenSizeStr(oldSize string) string {
 	var newSize = ""
@@ -30,6 +34,16 @@ func ShortenColourStr(colour string) string {
 	return newColour
 }
 
-func GenerateSKU(ID string, size string, colour string) string {
-	return "SSI-D" + ID + "-" + ShortenSizeStr(size) + "-" + ShortenColourStr(colour)
+func GenerateSKU(ID uint, size string, colour string) string {
+	return "SSI-D" + PrettifySKUIDToString(ID) + "-" + ShortenSizeStr(size) + "-" + ShortenColourStr(colour)
+}
+
+func StrToUint(word string) uint {
+
+	num, _ := strconv.Atoi(word)
+	return uint(num)
+}
+
+func PrettifySKUIDToString(id uint) string  {
+	return fmt.Sprintf("%08d", id)
 }
