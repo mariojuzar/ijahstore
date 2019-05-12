@@ -30,6 +30,15 @@ func (itemService) AddStockItem(item *sqlite.StockItem) (err error) {
 	if stockItem.Name != item.Name {
 		databaseService.db.Create(item)
 
+		databaseService.db.First(&stockItem, "name = ?", item.Name)
+
+		current := &sqlite.CurrentStockItem{
+			CurrentStock: 0,
+			StockItem: stockItem,
+		}
+
+		databaseService.db.Create(current)
+
 		if err := databaseService.db.GetErrors(); len(err) > 0 {
 			return err[0]
 		}
@@ -70,6 +79,13 @@ func (itemService) DeleteStockItem(id uint) (err error) {
 
 	if id == item.ID {
 		databaseService.db.Delete(item)
+
+		var current sqlite.CurrentStockItem
+		databaseService.db.First(&current, "id = ?", id)
+
+		if id == current.ID {
+			databaseService.db.Delete(current)
+		}
 
 		if err := databaseService.db.GetErrors(); len(err) > 0 {
 			return err[0]
