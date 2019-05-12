@@ -3,6 +3,7 @@ package sqlite
 import "time"
 
 type OutcomeStockLog struct {
+	OutcomeId 		uint		`json:"outcome_id"`
 	Time 			time.Time	`json:"time"`
 	StockItem
 	OrderId 		string		`json:"order_id"`

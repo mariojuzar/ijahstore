@@ -1,6 +1,7 @@
 package sqlite
 
 type SaleStock struct {
+	SaleStockId		uint	`json:"sale_stock_id"`
 	StockItem
 	Quantity 		uint	`json:"quantity"`
 	SellPrice		uint	`json:"sell_price"`

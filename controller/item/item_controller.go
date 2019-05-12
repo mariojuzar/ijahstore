@@ -22,7 +22,7 @@ func AddStockItem(c *gin.Context)  {
 	requestBody := util.GetRequestBody(c)
 
 	stockItem := sqlite.StockItem{
-		ItemID:    	srv.GenerateID(),
+		ItemID:	srv.GenerateID(),
 		SKUID:	id,
 		SKU:	util.GenerateSKU(id, requestBody["size"], requestBody["colour"]),
 		Name: 	util.PrettifyName(requestBody["name"], requestBody["size"], requestBody["colour"]),

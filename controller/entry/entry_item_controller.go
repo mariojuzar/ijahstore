@@ -17,18 +17,10 @@ func getEntryItemService() service.EntryItemService  {
 var srv = getEntryItemService()
 
 func AddEntryItem(c *gin.Context)  {
-	requestBody := util.GetRequestBody(c)
+	var entry request.EntryItemCreationRequest
+	util.GetRequestBodyEntryItemCreation(c, &entry)
 
-	entry := &request.EntryItemCreationRequest{
-		AmountOrder: 	util.StrToUint(requestBody["amountOrder"]),
-		AmountReceived: util.StrToUint(requestBody["amountReceived"]),
-		StockId: 		util.StrToUint(requestBody["stockId"]),
-		PurchasePrice: 	util.StrToUint(requestBody["purchasePrice"]),
-		ReceiptNumber: 	requestBody["receiptNumber"],
-		Note: 			requestBody["note"],
-	}
-
-	res, err := srv.AddEntryItem(entry)
+	res, err := srv.AddEntryItem(&entry)
 
 	var response = &baseResponse.BaseResponse{
 		ServerTime:	time.Now(),
@@ -50,15 +42,10 @@ func AddEntryItem(c *gin.Context)  {
 }
 
 func UpdateEntryItem(c *gin.Context)  {
-	requestBody := util.GetRequestBody(c)
+	var entry request.EntryItemUpdateRequest
+	util.GetRequestBodyEntryItemUpdate(c, &entry)
 
-	entry := &request.EntryItemUpdateRequest{
-		ID: 			util.StrToUint(requestBody["id"]),
-		AmountReceived:	util.StrToUint(requestBody["amountReceived"]),
-		Note: 			requestBody["note"],
-	}
-
-	res, err := srv.UpdateEntryItem(entry)
+	res, err := srv.UpdateEntryItem(&entry)
 
 	var response = &baseResponse.BaseResponse{
 		ServerTime:	time.Now(),

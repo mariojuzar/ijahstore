@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	entryController "ijahstore/controller/entry"
 	itemController "ijahstore/controller/item"
+	orderController "ijahstore/controller/order"
 	stockController "ijahstore/controller/stock"
 	"ijahstore/entity/path"
 	"ijahstore/entity/response"
@@ -34,6 +35,9 @@ func main()  {
 
 		// outcome item controller path
 		v1.GET(path.OutcomeItem)
+
+		// order controller path
+		v1.POST(path.Order, orderController.AddOrder)
 
 		// report controller path
 		v1.GET(path.Report)

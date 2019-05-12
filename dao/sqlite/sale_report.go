@@ -3,6 +3,7 @@ package sqlite
 import "time"
 
 type SaleReport struct {
+	SaleReportId	uint		`json:"sale_report_id"`
 	StartDate 		time.Time	`json:"start_date"`
 	EndDate 		time.Time	`json:"end_date"`
 	TotalRevenue 	uint        `json:"totalRevenue"`
