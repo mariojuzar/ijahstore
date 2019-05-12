@@ -12,6 +12,7 @@ type ItemService interface {
 	GetStockItem(id uint) (sqlite.StockItem, error)
 	GetAllStockItem() ([]sqlite.StockItem, error)
 	GenerateSKUID() uint
+	GenerateID() uint
 }
 
 type itemService struct {
@@ -51,15 +52,15 @@ func (itemService) AddStockItem(item *sqlite.StockItem) (err error) {
 func (itemService) UpdateStockItem(item *sqlite.StockItem) (err error) {
 	var stockItem sqlite.StockItem
 
-	databaseService.db.Model(sqlite.StockItem{}).Find(&stockItem, "id = ?", item.ID)
+	databaseService.db.Model(sqlite.StockItem{}).Find(&stockItem, "item_id = ?", item.ItemID)
 
-	if stockItem.ID == item.ID {
+	if stockItem.ItemID == item.ItemID {
 		stockItem.Colour = item.Colour
 		stockItem.Size = item.Size
 		stockItem.Name = item.Name
 		item.SKUID = stockItem.SKUID
 		item.SKU = stockItem.SKU
-		databaseService.db.Model(&stockItem).Updates(stockItem)
+		databaseService.db.Model(&stockItem).Where("item_id = ?", stockItem.ItemID).Updates(stockItem)
 
 		if err := databaseService.db.GetErrors(); len(err) > 0 {
 			return err[0]
@@ -67,7 +68,7 @@ func (itemService) UpdateStockItem(item *sqlite.StockItem) (err error) {
 
 		return
 	} else {
-		return exception.NewNotFoundException()
+		return exception.NewStockNotFoundException()
 	}
 }
 
@@ -80,8 +81,8 @@ func (itemService) GetStockItem(id uint) (sqlite.StockItem, error) {
 		return stockItem, err[0]
 	}
 
-	if stockItem.ID != id {
-		return stockItem, exception.NewNotFoundException()
+	if stockItem.ItemID != id {
+		return stockItem, exception.NewStockNotFoundException()
 	}
 
 	return stockItem, nil
@@ -107,4 +108,14 @@ func (itemService) GenerateSKUID() uint {
 	_ = databaseService.db.ScanRows(row, &stockItem)
 
 	return stockItem.SKUID + 1
+}
+
+func (itemService) GenerateID() uint {
+	var stockItem sqlite.StockItem
+
+	row, _ := databaseService.db.Model(sqlite.StockItem{}).Select("MAX(item_id) as item_id").Find(&stockItem).Rows()
+
+	_ = databaseService.db.ScanRows(row, &stockItem)
+
+	return stockItem.ItemID + 1
 }

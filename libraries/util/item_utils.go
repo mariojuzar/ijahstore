@@ -47,3 +47,8 @@ func StrToUint(word string) uint {
 func PrettifySKUIDToString(id uint) string  {
 	return fmt.Sprintf("%08d", id)
 }
+
+func PrettifyName(name string, size string, colour string) string {
+
+	return name + " (" + size + ", " + colour + ")"
+}

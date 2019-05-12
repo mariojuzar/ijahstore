@@ -22,9 +22,10 @@ func AddStockItem(c *gin.Context)  {
 	requestBody := util.GetRequestBody(c)
 
 	stockItem := sqlite.StockItem{
+		ItemID:    	srv.GenerateID(),
 		SKUID:	id,
 		SKU:	util.GenerateSKU(id, requestBody["size"], requestBody["colour"]),
-		Name: 	requestBody["name"],
+		Name: 	util.PrettifyName(requestBody["name"], requestBody["size"], requestBody["colour"]),
 		Size:	requestBody["size"],
 		Colour: requestBody["colour"],
 	}
@@ -53,8 +54,8 @@ func UpdateStockItem(c *gin.Context)  {
 	requestBody := util.GetRequestBody(c)
 
 	stockItem := sqlite.StockItem{
-		ID:		util.StrToUint(requestBody["id"]),
-		Name: 	requestBody["name"],
+		ItemID:	util.StrToUint(requestBody["id"]),
+		Name: 	util.PrettifyName(requestBody["name"], requestBody["size"], requestBody["colour"]),
 		Size:	requestBody["size"],
 		Colour: requestBody["colour"],
 	}
@@ -94,11 +95,11 @@ func GetStockItem(c *gin.Context)  {
 
 		c.JSON(http.StatusNotFound, response)
 	} else {
-		response.Code = http.StatusAccepted
-		response.Message = http.StatusText(http.StatusAccepted)
+		response.Code = http.StatusOK
+		response.Message = http.StatusText(http.StatusOK)
 		response.Data = stockItem
 
-		c.JSON(http.StatusAccepted, response)
+		c.JSON(http.StatusOK, response)
 	}
 }
 
@@ -115,10 +116,10 @@ func GetAllStockItem(c *gin.Context)  {
 
 		c.JSON(http.StatusInternalServerError, response)
 	} else {
-		response.Code = http.StatusAccepted
-		response.Message = http.StatusText(http.StatusAccepted)
+		response.Code = http.StatusOK
+		response.Message = http.StatusText(http.StatusOK)
 		response.Data = stockItem
 
-		c.JSON(http.StatusAccepted, response)
+		c.JSON(http.StatusOK, response)
 	}
 }

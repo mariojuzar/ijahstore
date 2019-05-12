@@ -1,13 +1,25 @@
 package exception
 
-type notFoundException struct {
+type stockNotFoundException struct {
 
 }
 
-func (notFoundException) Error() string {
-	return "Data not found"
+func (stockNotFoundException) Error() string {
+	return "Stock Data Not Found"
 }
 
-func NewNotFoundException() error {
-	return notFoundException{}
+func NewStockNotFoundException() error {
+	return stockNotFoundException{}
+}
+
+type entryItemLogNotFoundException struct {
+
+}
+
+func (entryItemLogNotFoundException) Error() string  {
+	return "Entry Stock Item Log Not Found"
+}
+
+func NewEntryItemLogNotFoundException() error  {
+	return entryItemLogNotFoundException{}
 }

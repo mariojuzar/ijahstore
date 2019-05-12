@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	entryController "ijahstore/controller/entry"
 	itemController "ijahstore/controller/item"
 	stockController "ijahstore/controller/stock"
 	"ijahstore/entity/path"
@@ -27,7 +28,9 @@ func main()  {
 		v1.GET(path.Stock, stockController.GetAllCurrentStock)
 
 		// entry item controller path
-		v1.GET(path.EntryItem)
+		v1.GET(path.EntryItem, entryController.GetAllEntryItem)
+		v1.POST(path.EntryItem, entryController.AddEntryItem)
+		v1.PUT(path.EntryItem, entryController.UpdateEntryItem)
 
 		// outcome item controller path
 		v1.GET(path.OutcomeItem)
