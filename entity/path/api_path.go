@@ -13,7 +13,8 @@ var Order = "/order"
 var Stock = "/stock"
 
 // report path
-var Report = "/report"
+var ReportValue = "/report-value"
+var ReportSales = "/report-sales"
 
 // migration path
 var Migration = "/migration"

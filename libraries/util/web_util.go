@@ -2,6 +2,7 @@ package util
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"ijahstore/entity/request"
 	"io/ioutil"
@@ -38,6 +39,19 @@ func GetRequestBodyEntryItemUpdate(c *gin.Context, entry *request.EntryItemUpdat
 }
 
 func GetRequestBodyOutcomeItem(c *gin.Context, out *request.OutComeItemCreationRequest)  {
+	decoder := json.NewDecoder(c.Request.Body)
+
+	_ = decoder.Decode(out)
+}
+
+func GetRequestBodyReportSales(c *gin.Context, out *request.ReportSalesRequest)  {
+	decoder := json.NewDecoder(c.Request.Body)
+	fmt.Println(c.Request.Body)
+
+	_ = decoder.Decode(out)
+}
+
+func GetRequestBodyReportValue(c *gin.Context, out *request.ReportValueRequest)  {
 	decoder := json.NewDecoder(c.Request.Body)
 
 	_ = decoder.Decode(out)

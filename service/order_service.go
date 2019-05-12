@@ -77,7 +77,11 @@ func getPurchasePrice(entries []sqlite.EntryStockLog) int {
 		n += 1
 	}
 
-	return sumPrice/n
+	if n > 0 {
+		return sumPrice/n
+	} else {
+		return 0
+	}
 }
 
 func generateIdSaleOrder() uint  {

@@ -6,6 +6,7 @@ import (
 	itemController "ijahstore/controller/item"
 	orderController "ijahstore/controller/order"
 	outcomeController "ijahstore/controller/outcome"
+	reportController "ijahstore/controller/report"
 	stockController "ijahstore/controller/stock"
 	"ijahstore/entity/path"
 	"ijahstore/entity/response"
@@ -42,7 +43,8 @@ func main()  {
 		v1.POST(path.Order, orderController.AddOrder)
 
 		// report controller path
-		v1.GET(path.Report)
+		v1.GET(path.ReportSales, reportController.GetSalesReport)
+		v1.GET(path.ReportValue, reportController.GetValueReport)
 
 		// migration controller path
 		v1.POST(path.MigrationImport)
