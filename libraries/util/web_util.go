@@ -36,3 +36,9 @@ func GetRequestBodyEntryItemUpdate(c *gin.Context, entry *request.EntryItemUpdat
 
 	_ = decoder.Decode(entry)
 }
+
+func GetRequestBodyOutcomeItem(c *gin.Context, out *request.OutComeItemCreationRequest)  {
+	decoder := json.NewDecoder(c.Request.Body)
+
+	_ = decoder.Decode(out)
+}

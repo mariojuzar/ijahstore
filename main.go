@@ -5,6 +5,7 @@ import (
 	entryController "ijahstore/controller/entry"
 	itemController "ijahstore/controller/item"
 	orderController "ijahstore/controller/order"
+	outcomeController "ijahstore/controller/outcome"
 	stockController "ijahstore/controller/stock"
 	"ijahstore/entity/path"
 	"ijahstore/entity/response"
@@ -34,7 +35,8 @@ func main()  {
 		v1.PUT(path.EntryItem, entryController.UpdateEntryItem)
 
 		// outcome item controller path
-		v1.GET(path.OutcomeItem)
+		v1.GET(path.OutcomeItem, outcomeController.GetAllOutcomeItem)
+		v1.POST(path.OutcomeItem, outcomeController.AddOutcomeItem)
 
 		// order controller path
 		v1.POST(path.Order, orderController.AddOrder)

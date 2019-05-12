@@ -1,6 +1,7 @@
 package service
 
 import (
+	jsoniter "github.com/json-iterator/go"
 	"ijahstore/dao/sqlite"
 	"ijahstore/entity/request"
 	"math/rand"
@@ -26,32 +27,39 @@ func (orderService) AddOrder(orders []request.OrderCreationRequest) (sqlite.Sale
 	for _, order := range orders {
 		var stockItem sqlite.StockItem
 		var entries []sqlite.EntryStockLog
+		var current sqlite.CurrentStockItem
 
 		databaseService.db.First(&stockItem, "item_id =?", order.StockId)
 		databaseService.db.Find(&entries, "item_id =?", order.StockId)
+		databaseService.db.First(&current, "item_id =?", order.StockId)
 
-		stock := sqlite.SaleStock{
-			SaleStockId:	generateIdSaleStock(),
-			StockItem: 		stockItem,
-			Quantity: 		order.Quantity,
-			SellPrice: 		order.SellPrice,
-			TotalPrice: 	order.SellPrice * order.Quantity,
-			PurchasedPrice:	uint(getPurchasePrice(entries)),
-			Profit: 		order.SellPrice - uint(getPurchasePrice(entries)),
+		if current.CurrentStock >= order.Quantity {
+			stock := sqlite.SaleStock{
+				SaleStockId:	generateIdSaleStock(),
+				StockItem: 		stockItem,
+				Quantity: 		order.Quantity,
+				SellPrice: 		order.SellPrice,
+				TotalPrice: 	order.SellPrice * order.Quantity,
+				PurchasedPrice:	uint(getPurchasePrice(entries)),
+				Profit: 		order.SellPrice - uint(getPurchasePrice(entries)),
+			}
+
+			sales = append(sales, stock)
 		}
-
-		sales = append(sales, stock)
-
 	}
+
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+	res, _ := json.MarshalToString(sales)
 
 	saleOrder := sqlite.SaleOrder{
 		SaleOrderId:	generateIdSaleOrder(),
 		OrderId: 		generateOrderId(),
 		Time: 			time.Now(),
 		SaleStock:		sales,
+		SaleStockString:res,
 	}
 
-	databaseService.db.Create(&saleOrder)
+	databaseService.db.Create(saleOrder)
 
 	if err := databaseService.db.GetErrors(); len(err) > 0 {
 		return saleOrder, err[0]
