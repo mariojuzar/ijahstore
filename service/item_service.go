@@ -112,9 +112,11 @@ func (itemService) GetAllStockItem() ([]sqlite.StockItem, error) {
 }
 
 func (itemService) GenerateSKUID() uint {
-	var biggestSKUID uint
+	var stockItem sqlite.StockItem
 
-	databaseService.db.Exec("SELECT MAX(SKUID) FROM stock_items ", &biggestSKUID)
+	row, _ := databaseService.db.Model(sqlite.StockItem{}).Select("MAX(sk_uid) as sk_uid").Find(&stockItem).Rows()
 
-	return biggestSKUID + 1
+	_ = databaseService.db.ScanRows(row, &stockItem)
+
+	return stockItem.SKUID + 1
 }
