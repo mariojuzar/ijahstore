@@ -9,7 +9,6 @@ import (
 type ItemService interface {
 	AddStockItem(item *sqlite.StockItem) error
 	UpdateStockItem(item *sqlite.StockItem) error
-	DeleteStockItem(id uint) error
 	GetStockItem(id uint) (sqlite.StockItem, error)
 	GetAllStockItem() ([]sqlite.StockItem, error)
 	GenerateSKUID() uint
@@ -70,33 +69,6 @@ func (itemService) UpdateStockItem(item *sqlite.StockItem) (err error) {
 	} else {
 		return exception.NewNotFoundException()
 	}
-}
-
-func (itemService) DeleteStockItem(id uint) (err error) {
-	var item sqlite.StockItem
-
-	databaseService.db.First(&item, "id = ?", id)
-
-	if id == item.ID {
-		databaseService.db.Delete(item)
-
-		var current sqlite.CurrentStockItem
-		databaseService.db.First(&current, "id = ?", id)
-
-		if id == current.ID {
-			databaseService.db.Delete(current)
-		}
-
-		if err := databaseService.db.GetErrors(); len(err) > 0 {
-			return err[0]
-		}
-	} else {
-		if err := databaseService.db.GetErrors(); len(err) > 0 {
-			return err[0]
-		}
-	}
-
-	return
 }
 
 func (itemService) GetStockItem(id uint) (sqlite.StockItem, error) {

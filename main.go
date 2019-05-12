@@ -22,7 +22,6 @@ func main()  {
 		v1.GET(path.ItemById, itemController.GetStockItem)
 		v1.POST(path.Item, itemController.AddStockItem)
 		v1.PUT(path.Item, itemController.UpdateStockItem)
-		v1.DELETE(path.ItemById, itemController.DeleteStockItem)
 
 		// current stock controller path
 		v1.GET(path.Stock, stockController.GetAllCurrentStock)

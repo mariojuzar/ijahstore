@@ -79,29 +79,6 @@ func UpdateStockItem(c *gin.Context)  {
 	}
 }
 
-func DeleteStockItem(c *gin.Context)  {
-	id := util.StrToUint(c.Params.ByName("id"))
-
-	err := srv.DeleteStockItem(id)
-
-	var response = &baseResponse.BaseResponse{
-		ServerTime:	time.Now(),
-	}
-
-	if err != nil {
-		response.Code = http.StatusNotFound
-		response.Message = err.Error()
-
-		c.JSON(http.StatusNotFound, response)
-	} else {
-		response.Code = http.StatusAccepted
-		response.Message = http.StatusText(http.StatusAccepted)
-		response.Data = nil
-
-		c.JSON(http.StatusAccepted, response)
-	}
-}
-
 func GetStockItem(c *gin.Context)  {
 	id := util.StrToUint(c.Params.ByName("id"))
 
