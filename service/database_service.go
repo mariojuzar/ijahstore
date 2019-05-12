@@ -18,5 +18,8 @@ func init()  {
 	db.LogMode(true)
 
 	db.AutoMigrate(
-		&sqlite.Item{})
+		&sqlite.StockItem{},
+		&sqlite.EntryStockLog{},
+		&sqlite.OutcomeStockLog{},
+		&sqlite.CurrentStockItem{})
 }
