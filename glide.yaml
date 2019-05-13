@@ -1,8 +1,0 @@
-package: ijahstore
-import:
-- package: github.com/gin-gonic/gin
-  version: v1.4.0
-- package: github.com/jinzhu/gorm
-  version: v1.9.8
-- package: github.com/alexflint/go-arg
-  version: ^1.0.0
