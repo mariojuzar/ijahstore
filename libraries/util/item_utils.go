@@ -2,6 +2,7 @@ package util
 
 import (
 	"fmt"
+	"github.com/Rhymond/go-money"
 	"strconv"
 	"strings"
 )
@@ -51,4 +52,9 @@ func PrettifySKUIDToString(id uint) string  {
 func PrettifyName(name string, size string, colour string) string {
 
 	return name + " (" + size + ", " + colour + ")"
+}
+
+func PrettifyPrice(locale string, price uint) string {
+
+	return money.GetCurrency(locale).Grapheme + strconv.Itoa(int(price))
 }

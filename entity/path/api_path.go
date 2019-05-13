@@ -19,4 +19,6 @@ var ReportSales = "/report-sales"
 // migration path
 var Migration = "/migration"
 var MigrationExport = Migration + "/export"
+var ExportValueReport = MigrationExport + "/report-value/:id"
+var ExportSaleReport = MigrationExport + "/report-sales/:id"
 var MigrationImport = Migration + "/import"

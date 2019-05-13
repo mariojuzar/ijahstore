@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	entryController "ijahstore/controller/entry"
 	itemController "ijahstore/controller/item"
+	migrationController "ijahstore/controller/migration"
 	orderController "ijahstore/controller/order"
 	outcomeController "ijahstore/controller/outcome"
 	reportController "ijahstore/controller/report"
@@ -47,8 +48,8 @@ func main()  {
 		v1.GET(path.ReportValue, reportController.GetValueReport)
 
 		// migration controller path
-		v1.POST(path.MigrationImport)
-		v1.GET(path.MigrationExport)
+		v1.GET(path.ExportValueReport, migrationController.GetCSVFromValueReport)
+		v1.GET(path.ExportSaleReport, migrationController.GetCSVFromVSaleReport)
 	}
 
 	engine.NoRoute(func(context *gin.Context) {
