@@ -75,7 +75,7 @@ func (itemService) UpdateStockItem(item *sqlite.StockItem) (err error) {
 func (itemService) GetStockItem(id uint) (sqlite.StockItem, error) {
 	var stockItem sqlite.StockItem
 
-	databaseService.db.Model(sqlite.StockItem{}).Find(&stockItem, "id = ?", id)
+	databaseService.db.Model(sqlite.StockItem{}).Find(&stockItem, "item_id = ?", id)
 
 	if err := databaseService.db.GetErrors(); len(err) > 0 {
 		return stockItem, err[0]
