@@ -4,13 +4,50 @@ IjahStore REST API to serve client app for Ijah Store Management
 # Feature
 Stock Management untuk Ijah Store meliputi:
 
-- Pengelolaan Stock Item (CRUD)
-- Info Catatan Jumlah Barang
-- Info Catatan Barang Masuk
-- Info Catatan Barang Keluar
-- Pembuatan Order
-- Laporan Nilai Barang
+1. **Pengelolaan Stock Item** (CRUD)
     
+   Untuk mendapatkan keseluruhan item yang ada
+   
+    ```localhost:7090/api/v1/item```
+
+2. **Info Catatan Jumlah Barang**
+    
+    Jumlah stok barang saat ini diakses melalui
+    
+    ```localhost:7090/api/v1/stock```
+    
+3. **Info Catatan Barang Masuk**
+
+    Catatan keseluruhan barang masuk ke gudang dapat diakses melalui
+    
+    ```localhost:7090/api/v1/entry```
+    
+4. **Info Catatan Barang Keluar**
+
+    Catatan keseluruhan barang keluar dari gudang dapat diakses melalui
+    
+    ```localhost:7090/api/v1/outcome```
+    
+5. **Pembuatan Order**
+
+    Pembuatan order dilakukan karena setiap barang yg keluar dari gudang harus mempunyai order id yg valid.
+    Untuk Pembuatan order melalui
+    
+    ```localhost:7090/api/v1/order```
+    
+6. **Laporan Nilai Barang**
+    
+    Untuk mendapatkan laporan nilai barang melalui
+    
+    ```localhost:7090/api/v1/report-value```
+    
+7. **Laporan Penjualan Barang**
+    
+    Untuk mendapatkan laporan penjualan barang melalui
+    
+    ```localhost:7090/api/v1/report-sales```
+
+Untuk dokumentasi yang lebih lengkap bisa mengakses dokumentasi API di bawah
 
 # Requirement
 - Go 1.12+
