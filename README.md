@@ -4,11 +4,12 @@ IjahStore REST API to serve client app for Ijah Store Management
 # Feature
 Stock Management untuk Ijah Store meliputi:
 
-1. **Pengelolaan Stock Item** (CRUD)
+1. **Pengelolaan Stock Item (CRUD)**
     
-   Untuk mendapatkan keseluruhan item yang ada
-   
+    Untuk mendapatkan keseluruhan item yang ada
+    
     ```localhost:7090/api/v1/item```
+
 
 2. **Info Catatan Jumlah Barang**
     
