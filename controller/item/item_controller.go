@@ -3,6 +3,7 @@ package item
 import (
 	"github.com/gin-gonic/gin"
 	"ijahstore/dao/sqlite"
+	"ijahstore/entity/request"
 	baseResponse "ijahstore/entity/response"
 	"ijahstore/libraries/util"
 	"ijahstore/service"
@@ -18,16 +19,17 @@ var srv = getItemService()
 
 func AddStockItem(c *gin.Context)  {
 	id := srv.GenerateSKUID()
+	var stock sqlite.StockItem
 
-	requestBody := util.GetRequestBody(c)
+	util.GetRequestBodyStockItem(c, &stock)
 
 	stockItem := sqlite.StockItem{
 		ItemID:	srv.GenerateID(),
 		SKUID:	id,
-		SKU:	util.GenerateSKU(id, requestBody["size"], requestBody["colour"]),
-		Name: 	util.PrettifyName(requestBody["name"], requestBody["size"], requestBody["colour"]),
-		Size:	requestBody["size"],
-		Colour: requestBody["colour"],
+		SKU:	util.GenerateSKU(id, stock.Size, stock.Colour),
+		Name: 	util.PrettifyName(stock.Name, stock.Size, stock.Colour),
+		Size:	stock.Size,
+		Colour: stock.Colour,
 	}
 
 	err := srv.AddStockItem(&stockItem)
@@ -51,13 +53,15 @@ func AddStockItem(c *gin.Context)  {
 }
 
 func UpdateStockItem(c *gin.Context)  {
-	requestBody := util.GetRequestBody(c)
+	var stock request.StockItemUpdateRequest
+
+	util.GetRequestBodyStockItemUpdateRequest(c, &stock)
 
 	stockItem := sqlite.StockItem{
-		ItemID:	util.StrToUint(requestBody["id"]),
-		Name: 	util.PrettifyName(requestBody["name"], requestBody["size"], requestBody["colour"]),
-		Size:	requestBody["size"],
-		Colour: requestBody["colour"],
+		ItemID:	stock.ID,
+		Name: 	util.PrettifyName(stock.Name, stock.Size, stock.Colour),
+		Size:	stock.Size,
+		Colour: stock.Colour,
 	}
 
 	err := srv.UpdateStockItem(&stockItem)

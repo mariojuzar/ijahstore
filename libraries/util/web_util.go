@@ -4,20 +4,20 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"ijahstore/dao/sqlite"
 	"ijahstore/entity/request"
-	"io/ioutil"
 )
 
-func GetRequestBody(c *gin.Context) map[string]string {
-	var bodyBytes []byte
-	if c.Request.Body != nil {
-		bodyBytes, _ = ioutil.ReadAll(c.Request.Body)
-	}
+func GetRequestBodyStockItem(c *gin.Context, item *sqlite.StockItem)  {
+	decoder := json.NewDecoder(c.Request.Body)
 
-	requestBody := make(map[string]string)
-	_ = json.Unmarshal(bodyBytes, &requestBody)
+	_ = decoder.Decode(item)
+}
 
-	return requestBody
+func GetRequestBodyStockItemUpdateRequest(c *gin.Context, item *request.StockItemUpdateRequest)  {
+	decoder := json.NewDecoder(c.Request.Body)
+
+	_ = decoder.Decode(item)
 }
 
 func GetRequestBodyListOrder(c *gin.Context, orders *request.OrderRequest)  {
